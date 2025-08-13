@@ -1,0 +1,7 @@
+{
+  "/health-check/page": "app/health-check/page.js",
+  "/about/page": "app/about/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/gemini/page": "app/gemini/page.js",
+  "/page": "app/page.js"
+}
