@@ -721,6 +721,10 @@ const ChatBot = ({ inPopup = false }: ChatBotProps) => {
       const transcript = event.results[0][0].transcript
       setInput(transcript)
       setIsRecording(false)
+      toast({
+        title: "Voice input received",
+        description: "Processing your voice message",
+      })
     }
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
@@ -751,12 +755,21 @@ const ChatBot = ({ inPopup = false }: ChatBotProps) => {
       recognition.stop()
       setIsRecording(false)
     } else {
-      recognition.start()
-      setIsRecording(true)
-      toast({
-        title: "Listening...",
-        description: "Speak clearly into your microphone",
-      })
+      try {
+        recognition.start()
+        setIsRecording(true)
+        toast({
+          title: "Listening...",
+          description: "Speak clearly into your microphone",
+        })
+      } catch (error) {
+        setIsRecording(false)
+        toast({
+          title: "Voice recognition error",
+          description: "Failed to start recording. Please try again.",
+          variant: "destructive",
+        })
+      }
     }
   }
 
@@ -781,9 +794,28 @@ const ChatBot = ({ inPopup = false }: ChatBotProps) => {
       utterance.pitch = 1.0
       utterance.volume = 1.0
       
-      utterance.onstart = () => setIsSpeaking(true)
-      utterance.onend = () => setIsSpeaking(false)
-      utterance.onerror = () => setIsSpeaking(false)
+      utterance.onstart = () => {
+        setIsSpeaking(true)
+        toast({
+          title: "Speaking...",
+          description: "Tadashi AI is reading the response",
+        })
+      }
+      utterance.onend = () => {
+        setIsSpeaking(false)
+        toast({
+          title: "Finished speaking",
+          description: "Response completed",
+        })
+      }
+      utterance.onerror = () => {
+        setIsSpeaking(false)
+        toast({
+          title: "Speech error",
+          description: "Failed to read the response",
+          variant: "destructive",
+        })
+      }
       
       window.speechSynthesis.speak(utterance)
     } else {
@@ -799,6 +831,10 @@ const ChatBot = ({ inPopup = false }: ChatBotProps) => {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel()
       setIsSpeaking(false)
+      toast({
+        title: "Speech stopped",
+        description: "Reading has been stopped",
+      })
     }
   }
 
@@ -889,6 +925,11 @@ const ChatBot = ({ inPopup = false }: ChatBotProps) => {
             gif: gif,
           },
         ])
+        
+        toast({
+          title: "Response received",
+          description: "Tadashi AI has responded to your query",
+        })
       } else {
         // Show error details
         const errorData = await apiResponse.json().catch(() => ({}))
@@ -909,6 +950,11 @@ const ChatBot = ({ inPopup = false }: ChatBotProps) => {
             gif: fallbackResponse.gif,
           },
         ])
+        
+        toast({
+          title: "Using local response",
+          description: "Switched to local AI for your query",
+        })
       }
     } catch (error) {
       console.error("Error calling Mistral API:", error)

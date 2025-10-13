@@ -3,26 +3,26 @@ import { Heart } from "lucide-react"
 
 const Footer = () => {
   return (
-    <footer className="bg-baymax-gray dark:bg-gray-800 py-12">
-      <div className="baymax-container">
+    <footer className="tadashi-footer">
+      <div className="tadashi-container">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center">
-              <span className="text-2xl font-bold text-baymax-darkBlue dark:text-baymax-blue">Baymax</span>
+              <span className="text-2xl font-bold text-tadashi-darkBlue dark:text-tadashi-blue">Tadashi AI</span>
             </Link>
-            <p className="mt-4 text-gray-600 dark:text-gray-300 max-w-md">
+            <p className="mt-4 tadashi-footer-text max-w-md">
               Your personal healthcare companion, inspired by Disney's lovable robot. We're here to help you stay
               healthy and happy.
             </p>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Links</h3>
+            <h3 className="tadashi-footer-heading">Links</h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/"
-                  className="text-gray-600 dark:text-gray-400 hover:text-baymax-darkBlue dark:hover:text-baymax-blue transition-colors duration-200"
+                  className="tadashi-footer-link"
                 >
                   Home
                 </Link>
@@ -30,7 +30,7 @@ const Footer = () => {
               <li>
                 <Link
                   href="/chatbot"
-                  className="text-gray-600 dark:text-gray-400 hover:text-baymax-darkBlue dark:hover:text-baymax-blue transition-colors duration-200"
+                  className="tadashi-footer-link"
                 >
                   Chatbot
                 </Link>
@@ -38,23 +38,31 @@ const Footer = () => {
               <li>
                 <Link
                   href="/health-check"
-                  className="text-gray-600 dark:text-gray-400 hover:text-baymax-darkBlue dark:hover:text-baymax-blue transition-colors duration-200"
+                  className="tadashi-footer-link"
                 >
                   Health Check
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/gemini"
-                  className="text-gray-600 dark:text-gray-400 hover:text-baymax-darkBlue dark:hover:text-baymax-blue transition-colors duration-200"
+                  href="/tts-stt"
+                  className="tadashi-footer-link"
                 >
-                  Gemini AI
+                  TTS/STT
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/premium"
+                  className="tadashi-footer-link"
+                >
+                  Premium
                 </Link>
               </li>
               <li>
                 <Link
                   href="/about"
-                  className="text-gray-600 dark:text-gray-400 hover:text-baymax-darkBlue dark:hover:text-baymax-blue transition-colors duration-200"
+                  className="tadashi-footer-link"
                 >
                   About
                 </Link>
@@ -62,7 +70,7 @@ const Footer = () => {
               <li>
                 <Link
                   href="/contact"
-                  className="text-gray-600 dark:text-gray-400 hover:text-baymax-darkBlue dark:hover:text-baymax-blue transition-colors duration-200"
+                  className="tadashi-footer-link"
                 >
                   Contact
                 </Link>
@@ -71,18 +79,18 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Contact</h3>
+            <h3 className="tadashi-footer-heading">Contact</h3>
             <ul className="space-y-2">
-              <li className="text-gray-600 dark:text-gray-400">San Fransokyo Institute of Technology</li>
-              <li className="text-gray-600 dark:text-gray-400">contact@baymax-health.com</li>
-              <li className="text-gray-600 dark:text-gray-400"></li>
+              <li className="tadashi-footer-text">San Fransokyo Institute of Technology</li>
+              <li className="tadashi-footer-text">contact@tadashi-ai.com</li>
+              <li className="tadashi-footer-text">+1 (555) 123-4567</li>
             </ul>
           </div>
         </div>
 
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-          <p className="text-center text-gray-600 dark:text-gray-400 flex items-center justify-center">
-            Made with <Heart className="h-4 w-4 mx-1 text-red-500 inline" /> by Baymax Health Team
+          <p className="text-center tadashi-footer-text flex items-center justify-center">
+            Made with <Heart className="h-4 w-4 mx-1 text-red-500 inline" /> by Tadashi AI Team
           </p>
         </div>
       </div>

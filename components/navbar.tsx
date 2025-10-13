@@ -77,8 +77,8 @@ const Navbar = () => {
   return (
     <nav
       className={cn(
-        "fixed w-full z-50 transition-all duration-300",
-        scrolled ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm" : "bg-transparent",
+        "tadashi-navbar",
+        scrolled && "tadashi-navbar-scrolled"
       )}
     >
       <div className="tadashi-container">
@@ -91,26 +91,26 @@ const Navbar = () => {
 
           {/* Desktop menu */}
           <div className="hidden md:flex items-center">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-tadashi-darkBlue dark:hover:text-tadashi-blue transition-colors duration-200"
+                  className="tadashi-navbar-link"
                 >
                   {link.name}
                 </Link>
               ))}
             </div>
 
-            <div className="flex items-center ml-4">
+            <div className="flex items-center ml-4 space-x-2">
               {user ? (
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-3">
                   <span className="text-sm text-gray-700 dark:text-gray-300 hidden md:inline">
                     Hi, {user.name}
                   </span>
                   {user.isPremium && (
-                    <span className="bg-tadashi-blue text-white text-xs px-2 py-1 rounded-full">
+                    <span className="tadashi-premium-badge">
                       Premium
                     </span>
                   )}
@@ -180,7 +180,7 @@ const Navbar = () => {
             <Link
               key={link.name}
               href={link.href}
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-tadashi-darkBlue dark:hover:text-tadashi-blue hover:bg-tadashi-lightBlue dark:hover:bg-gray-700 transition-colors duration-200"
+              className="tadashi-navbar-mobile-link"
               onClick={() => setIsOpen(false)}
             >
               {link.name}
@@ -193,7 +193,7 @@ const Navbar = () => {
                 <div className="px-3 py-2 text-gray-700 dark:text-gray-300">
                   Hi, {user.name}
                   {user.isPremium && (
-                    <span className="ml-2 bg-tadashi-blue text-white text-xs px-2 py-1 rounded-full">
+                    <span className="ml-2 tadashi-premium-badge">
                       Premium
                     </span>
                   )}
@@ -203,7 +203,7 @@ const Navbar = () => {
                     handleLogout()
                     setIsOpen(false)
                   }}
-                  className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-tadashi-darkBlue dark:hover:text-tadashi-blue hover:bg-tadashi-lightBlue dark:hover:bg-gray-700 transition-colors duration-200"
+                  className="tadashi-navbar-mobile-link w-full text-left"
                 >
                   Logout
                 </button>
@@ -212,14 +212,14 @@ const Navbar = () => {
               <div className="space-y-2">
                 <Link
                   href="/login"
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-tadashi-darkBlue dark:hover:text-tadashi-blue hover:bg-tadashi-lightBlue dark:hover:bg-gray-700 transition-colors duration-200"
+                  className="tadashi-navbar-mobile-link"
                   onClick={() => setIsOpen(false)}
                 >
                   Login
                 </Link>
                 <Link
                   href="/signup"
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-tadashi-darkBlue dark:hover:text-tadashi-blue hover:bg-tadashi-lightBlue dark:hover:bg-gray-700 transition-colors duration-200"
+                  className="tadashi-navbar-mobile-link"
                   onClick={() => setIsOpen(false)}
                 >
                   Sign Up

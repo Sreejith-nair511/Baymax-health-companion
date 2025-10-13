@@ -11,14 +11,16 @@ export default function TtsSttPage() {
     <div className="pt-24 pb-12 min-h-screen bg-tadashi-lightBlue dark:bg-gray-800 theme-aware relative overflow-hidden">
       <ParticleBackground />
       <div className="tadashi-container relative z-10">
-        <div className="text-center mb-12 animate-fadeIn">
-          <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">TTS/STT with Mistral AI</h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        <div className="text-center mb-12 animate-fadeInUp">
+          <h1 className="tadashi-hero">
+            TTS/STT with Mistral AI
+          </h1>
+          <p className="tadashi-tagline">
             Experience advanced healthcare assistance with Text-to-Speech and Speech-to-Text capabilities powered by Mistral AI.
           </p>
         </div>
 
-        <div className="animate-slideUp">
+        <div className="max-w-4xl mx-auto animate-fadeInUp">
           <TtsSttChatBox />
         </div>
       </div>

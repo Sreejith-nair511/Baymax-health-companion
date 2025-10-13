@@ -5,19 +5,20 @@ export async function POST(req: NextRequest) {
     const { prompt } = await req.json()
 
     if (!prompt) {
-      return NextResponse.json({ error: "Prompt is required" }, { status: 400 })
+      return NextResponse.json({ 
+        error: "Prompt is required",
+        status: "error"
+      }, { status: 400 })
     }
 
     const apiKey = process.env.MISTRAL_API_KEY
 
-    console.log("API Key exists:", !!apiKey)
-    if (apiKey) {
-      console.log("API Key length:", apiKey.length)
-      console.log("API Key preview:", apiKey.substring(0, 5) + "...")
-    }
-
     if (!apiKey) {
-      return NextResponse.json({ error: "Mistral API key not configured" }, { status: 500 })
+      return NextResponse.json({ 
+        error: "Mistral API key not configured",
+        status: "error",
+        needsFallback: true
+      }, { status: 500 })
     }
 
     // Add a system instruction to guide Mistral's responses for health-related queries
@@ -31,8 +32,6 @@ export async function POST(req: NextRequest) {
       
       If asked about serious medical conditions, remind the user to consult with a healthcare professional.
     `
-
-    console.log("Calling Mistral API with prompt:", prompt.substring(0, 100) + "...")
 
     const response = await fetch(
       "https://api.mistral.ai/v1/chat/completions",
@@ -54,12 +53,25 @@ export async function POST(req: NextRequest) {
       }
     )
 
-    console.log("Mistral API response status:", response.status)
-
     if (!response.ok) {
       const errorText = await response.text()
       console.error("Mistral API error:", errorText)
-      return NextResponse.json({ error: "Error from Mistral API", details: errorText }, { status: response.status })
+      
+      // If it's a rate limit error, suggest fallback
+      if (response.status === 429) {
+        return NextResponse.json({ 
+          error: "Rate limit exceeded. Please try again later.",
+          status: "error",
+          needsFallback: true
+        }, { status: 429 })
+      }
+      
+      return NextResponse.json({ 
+        error: "Error from Mistral API",
+        details: errorText,
+        status: "error",
+        needsFallback: true
+      }, { status: response.status })
     }
 
     const data = await response.json()
@@ -68,12 +80,25 @@ export async function POST(req: NextRequest) {
     const responseText = data.choices?.[0]?.message?.content || ""
 
     if (!responseText) {
-      return NextResponse.json({ error: "No response from Mistral", needsFallback: true }, { status: 200 })
+      return NextResponse.json({ 
+        error: "No response from Mistral",
+        status: "error",
+        needsFallback: true
+      }, { status: 200 })
     }
 
-    return NextResponse.json({ response: responseText })
+    return NextResponse.json({ 
+      response: responseText,
+      status: "success",
+      timestamp: new Date().toISOString()
+    })
   } catch (error) {
     console.error("Error calling Mistral API:", error)
-    return NextResponse.json({ error: "Failed to process request", needsFallback: true }, { status: 500 })
+    return NextResponse.json({ 
+      error: "Failed to process request",
+      message: error instanceof Error ? error.message : "Unknown error",
+      status: "error",
+      needsFallback: true
+    }, { status: 500 })
   }
 }

@@ -75,78 +75,76 @@ export default function SignupPage() {
         <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-xl overflow-hidden">
           <div className="p-8">
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2">Create Account</h1>
-              <p className="text-gray-600 dark:text-gray-300">
+              <h1 className="tadashi-heading">Create Account</h1>
+              <p className="tadashi-text">
                 Join Tadashi AI to access premium healthcare features
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="dark:text-gray-300">
-                    Full Name
-                  </Label>
-                  <Input
-                    id="name"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="tadashi-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                    placeholder="Your full name"
-                    required
-                  />
-                </div>
+            <form onSubmit={handleSubmit} className="tadashi-form">
+              <div className="tadashi-form-group">
+                <Label htmlFor="name" className="tadashi-form-label">
+                  Full Name
+                </Label>
+                <Input
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="tadashi-form-input"
+                  placeholder="Your full name"
+                  required
+                />
+              </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="dark:text-gray-300">
-                    Email
-                  </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="tadashi-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                    placeholder="your@email.com"
-                    required
-                  />
-                </div>
+              <div className="tadashi-form-group">
+                <Label htmlFor="email" className="tadashi-form-label">
+                  Email
+                </Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="tadashi-form-input"
+                  placeholder="your@email.com"
+                  required
+                />
+              </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="password" className="dark:text-gray-300">
-                    Password
-                  </Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="tadashi-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                    placeholder="••••••••"
-                    required
-                  />
-                </div>
+              <div className="tadashi-form-group">
+                <Label htmlFor="password" className="tadashi-form-label">
+                  Password
+                </Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="tadashi-form-input"
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword" className="dark:text-gray-300">
-                    Confirm Password
-                  </Label>
-                  <Input
-                    id="confirmPassword"
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="tadashi-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                    placeholder="••••••••"
-                    required
-                  />
-                </div>
+              <div className="tadashi-form-group">
+                <Label htmlFor="confirmPassword" className="tadashi-form-label">
+                  Confirm Password
+                </Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="tadashi-form-input"
+                  placeholder="••••••••"
+                  required
+                />
               </div>
 
               <Button
                 type="submit"
-                className="tadashi-button w-full dark:bg-tadashi-blue dark:hover:bg-tadashi-darkBlue"
+                className="tadashi-button w-full mt-6"
                 disabled={loading}
               >
                 {loading ? "Creating account..." : "Create Account"}
@@ -154,7 +152,7 @@ export default function SignupPage() {
             </form>
 
             <div className="mt-6 text-center">
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="tadashi-text">
                 Already have an account?{" "}
                 <Link href="/login" className="text-tadashi-blue dark:text-tadashi-darkBlue font-medium hover:underline">
                   Sign in

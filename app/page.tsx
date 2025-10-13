@@ -97,7 +97,7 @@ export default function Home() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-4xl md:text-6xl font-bold text-tadashi-darkBlue dark:text-tadashi-blue mb-6"
+            className="tadashi-hero"
           >
             Tadashi AI
           </motion.h1>
@@ -106,7 +106,7 @@ export default function Home() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.5 }}
-            className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-2xl"
+            className="tadashi-tagline"
           >
             Your personal healthcare companion
           </motion.p>

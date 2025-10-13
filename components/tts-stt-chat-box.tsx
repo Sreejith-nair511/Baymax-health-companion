@@ -93,6 +93,10 @@ export default function TtsSttChatBox() {
       const transcript = event.results[0][0].transcript
       setInput(transcript)
       setIsRecording(false)
+      toast({
+        title: "Voice input received",
+        description: "Processing your voice message",
+      })
     }
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
@@ -132,12 +136,21 @@ export default function TtsSttChatBox() {
       recognition.stop()
       setIsRecording(false)
     } else {
-      recognition.start()
-      setIsRecording(true)
-      toast({
-        title: "Listening...",
-        description: "Speak clearly into your microphone",
-      })
+      try {
+        recognition.start()
+        setIsRecording(true)
+        toast({
+          title: "Listening...",
+          description: "Speak clearly into your microphone",
+        })
+      } catch (error) {
+        setIsRecording(false)
+        toast({
+          title: "Voice recognition error",
+          description: "Failed to start recording. Please try again.",
+          variant: "destructive",
+        })
+      }
     }
   }
 
@@ -161,9 +174,28 @@ export default function TtsSttChatBox() {
       utterance.pitch = 1.0
       utterance.volume = 1.0
       
-      utterance.onstart = () => setIsSpeaking(true)
-      utterance.onend = () => setIsSpeaking(false)
-      utterance.onerror = () => setIsSpeaking(false)
+      utterance.onstart = () => {
+        setIsSpeaking(true)
+        toast({
+          title: "Speaking...",
+          description: "Tadashi AI is reading the response",
+        })
+      }
+      utterance.onend = () => {
+        setIsSpeaking(false)
+        toast({
+          title: "Finished speaking",
+          description: "Response completed",
+        })
+      }
+      utterance.onerror = () => {
+        setIsSpeaking(false)
+        toast({
+          title: "Speech error",
+          description: "Failed to read the response",
+          variant: "destructive",
+        })
+      }
       
       window.speechSynthesis.speak(utterance)
     } else {
@@ -179,6 +211,10 @@ export default function TtsSttChatBox() {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel()
       setIsSpeaking(false)
+      toast({
+        title: "Speech stopped",
+        description: "Reading has been stopped",
+      })
     }
   }
 
@@ -217,7 +253,8 @@ export default function TtsSttChatBox() {
       })
 
       if (!response.ok) {
-        throw new Error("Failed to get response from Mistral")
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`)
       }
 
       const data = await response.json()
@@ -229,11 +266,16 @@ export default function TtsSttChatBox() {
           content: data.response,
         },
       ])
+      
+      toast({
+        title: "Response received",
+        description: "Mistral AI has responded to your query",
+      })
     } catch (error) {
       console.error("Error:", error)
       toast({
         title: "Error",
-        description: "Failed to get response from Mistral. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to get response from Mistral. Please try again.",
         variant: "destructive",
       })
     } finally {

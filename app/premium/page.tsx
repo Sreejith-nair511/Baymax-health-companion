@@ -110,10 +110,10 @@ export default function PremiumPage() {
         </Link>
         
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+          <h1 className="tadashi-hero">
             Upgrade to <span className="text-tadashi-darkBlue dark:text-tadashi-blue">Tadashi AI Premium</span>
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="tadashi-tagline">
             Unlock the full potential of your personal healthcare companion with advanced features designed to improve your health and wellbeing.
           </p>
           <div className="flex justify-center mt-6">
@@ -148,36 +148,36 @@ export default function PremiumPage() {
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {plans.map((plan) => (
-            <Card 
+            <div 
               key={plan.name} 
-              className={`relative overflow-hidden ${plan.popular ? 'border-2 border-tadashi-blue shadow-xl scale-105' : 'border-gray-200 dark:border-gray-700'}`}
+              className={`tadashi-pricing-card ${plan.popular ? 'tadashi-pricing-popular' : ''}`}
             >
               {plan.popular && (
-                <div className="absolute top-0 right-0 bg-tadashi-blue text-white px-4 py-1 text-sm font-bold rounded-bl-lg">
+                <div className="tadashi-pricing-badge">
                   MOST POPULAR
                 </div>
               )}
-              <CardHeader>
-                <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                <CardDescription>
-                  <span className="text-3xl font-bold text-gray-800 dark:text-gray-100">{plan.price}</span>
+              <div className="p-1">
+                <div className="tadashi-pricing-title">{plan.name}</div>
+                <div className="tadashi-pricing-description">
+                  <span className="tadashi-pricing-price">{plan.price}</span>
                   {plan.name === "Premium" && (
                     <span className="text-gray-500 dark:text-gray-400">/{isAnnual ? "year" : "month"}</span>
                   )}
-                  <p className="mt-2 text-gray-600 dark:text-gray-300">{plan.description}</p>
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
+                  <p className="mt-2">{plan.description}</p>
+                </div>
+              </div>
+              <div className="p-1">
                 <ul className="space-y-3">
                   {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-start">
-                      <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700 dark:text-gray-300">{feature}</span>
+                    <li key={index} className="tadashi-pricing-feature">
+                      <Check className="tadashi-pricing-feature-icon" />
+                      <span className="tadashi-pricing-feature-text">{feature}</span>
                     </li>
                   ))}
                 </ul>
-              </CardContent>
-              <CardFooter>
+              </div>
+              <div className="p-1 pt-4">
                 <Button 
                   className={`w-full ${plan.popular ? 'bg-tadashi-blue hover:bg-tadashi-darkBlue text-white' : 'border border-gray-300 dark:border-gray-600'}`}
                   onClick={() => {
@@ -189,8 +189,8 @@ export default function PremiumPage() {
                 >
                   {loading ? "Processing..." : plan.cta}
                 </Button>
-              </CardFooter>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
 
@@ -198,62 +198,62 @@ export default function PremiumPage() {
         <div className="mt-20">
           <h2 className="tadashi-heading text-center dark:text-gray-100 mb-12">Premium Features</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="tadashi-card text-center dark:bg-gray-800 dark:border-gray-700">
-              <div className="rounded-full bg-tadashi-lightBlue dark:bg-tadashi-blue/20 p-4 w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                <Star className="h-8 w-8 text-tadashi-darkBlue dark:text-tadashi-blue" />
+            <div className="tadashi-feature-card">
+              <div className="tadashi-feature-icon">
+                <Star className="h-6 w-6 text-tadashi-darkBlue dark:text-tadashi-blue" />
               </div>
-              <h3 className="tadashi-subheading dark:text-gray-200 mb-3">Advanced AI Analysis</h3>
-              <p className="tadashi-text dark:text-gray-300">
+              <h3 className="tadashi-feature-title">Advanced AI Analysis</h3>
+              <p className="tadashi-feature-description">
                 Get deeper insights from your health data with our enhanced AI algorithms.
               </p>
             </div>
 
-            <div className="tadashi-card text-center dark:bg-gray-800 dark:border-gray-700">
-              <div className="rounded-full bg-tadashi-lightBlue dark:bg-tadashi-blue/20 p-4 w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                <Shield className="h-8 w-8 text-tadashi-darkBlue dark:text-tadashi-blue" />
+            <div className="tadashi-feature-card">
+              <div className="tadashi-feature-icon">
+                <Shield className="h-6 w-6 text-tadashi-darkBlue dark:text-tadashi-blue" />
               </div>
-              <h3 className="tadashi-subheading dark:text-gray-200 mb-3">Priority Support</h3>
-              <p className="tadashi-text dark:text-gray-300">
+              <h3 className="tadashi-feature-title">Priority Support</h3>
+              <p className="tadashi-feature-description">
                 Receive faster responses and dedicated healthcare support when you need it most.
               </p>
             </div>
 
-            <div className="tadashi-card text-center dark:bg-gray-800 dark:border-gray-700">
-              <div className="rounded-full bg-tadashi-lightBlue dark:bg-tadashi-blue/20 p-4 w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                <Heart className="h-8 w-8 text-tadashi-darkBlue dark:text-tadashi-blue" />
+            <div className="tadashi-feature-card">
+              <div className="tadashi-feature-icon">
+                <Heart className="h-6 w-6 text-tadashi-darkBlue dark:text-tadashi-blue" />
               </div>
-              <h3 className="tadashi-subheading dark:text-gray-200 mb-3">Personalized Care</h3>
-              <p className="tadashi-text dark:text-gray-300">
+              <h3 className="tadashi-feature-title">Personalized Care</h3>
+              <p className="tadashi-feature-description">
                 Receive customized health recommendations based on your unique health profile.
               </p>
             </div>
 
-            <div className="tadashi-card text-center dark:bg-gray-800 dark:border-gray-700">
-              <div className="rounded-full bg-tadashi-lightBlue dark:bg-tadashi-blue/20 p-4 w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                <Activity className="h-8 w-8 text-tadashi-darkBlue dark:text-tadashi-blue" />
+            <div className="tadashi-feature-card">
+              <div className="tadashi-feature-icon">
+                <Activity className="h-6 w-6 text-tadashi-darkBlue dark:text-tadashi-blue" />
               </div>
-              <h3 className="tadashi-subheading dark:text-gray-200 mb-3">Comprehensive Tracking</h3>
-              <p className="tadashi-text dark:text-gray-300">
+              <h3 className="tadashi-feature-title">Comprehensive Tracking</h3>
+              <p className="tadashi-feature-description">
                 Monitor all aspects of your health with our advanced tracking capabilities.
               </p>
             </div>
 
-            <div className="tadashi-card text-center dark:bg-gray-800 dark:border-gray-700">
-              <div className="rounded-full bg-tadashi-lightBlue dark:bg-tadashi-blue/20 p-4 w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                <Users className="h-8 w-8 text-tadashi-darkBlue dark:text-tadashi-blue" />
+            <div className="tadashi-feature-card">
+              <div className="tadashi-feature-icon">
+                <Users className="h-6 w-6 text-tadashi-darkBlue dark:text-tadashi-blue" />
               </div>
-              <h3 className="tadashi-subheading dark:text-gray-200 mb-3">Family Health</h3>
-              <p className="tadashi-text dark:text-gray-300">
+              <h3 className="tadashi-feature-title">Family Health</h3>
+              <p className="tadashi-feature-description">
                 Extend premium benefits to your entire family for comprehensive care.
               </p>
             </div>
 
-            <div className="tadashi-card text-center dark:bg-gray-800 dark:border-gray-700">
-              <div className="rounded-full bg-tadashi-lightBlue dark:bg-tadashi-blue/20 p-4 w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                <Award className="h-8 w-8 text-tadashi-darkBlue dark:text-tadashi-blue" />
+            <div className="tadashi-feature-card">
+              <div className="tadashi-feature-icon">
+                <Award className="h-6 w-6 text-tadashi-darkBlue dark:text-tadashi-blue" />
               </div>
-              <h3 className="tadashi-subheading dark:text-gray-200 mb-3">Exclusive Content</h3>
-              <p className="tadashi-text dark:text-gray-300">
+              <h3 className="tadashi-feature-title">Exclusive Content</h3>
+              <p className="tadashi-feature-description">
                 Access premium health content and resources not available to basic users.
               </p>
             </div>
@@ -264,21 +264,21 @@ export default function PremiumPage() {
         <div className="mt-20">
           <h2 className="tadashi-heading text-center dark:text-gray-100 mb-12">Frequently Asked Questions</h2>
           <div className="max-w-3xl mx-auto space-y-6">
-            <div className="tadashi-card dark:bg-gray-800 dark:border-gray-700">
-              <h3 className="tadashi-subheading dark:text-gray-200 mb-2">How do I cancel my subscription?</h3>
-              <p className="tadashi-text dark:text-gray-300">
+            <div className="tadashi-card">
+              <h3 className="tadashi-subheading">How do I cancel my subscription?</h3>
+              <p className="tadashi-text">
                 You can cancel your subscription at any time from your account settings. Your premium access will continue until the end of your billing period.
               </p>
             </div>
-            <div className="tadashi-card dark:bg-gray-800 dark:border-gray-700">
-              <h3 className="tadashi-subheading dark:text-gray-200 mb-2">Can I switch between monthly and annual plans?</h3>
-              <p className="tadashi-text dark:text-gray-300">
+            <div className="tadashi-card">
+              <h3 className="tadashi-subheading">Can I switch between monthly and annual plans?</h3>
+              <p className="tadashi-text">
                 Yes, you can switch between monthly and annual plans at any time. Changes will take effect at the start of your next billing cycle.
               </p>
             </div>
-            <div className="tadashi-card dark:bg-gray-800 dark:border-gray-700">
-              <h3 className="tadashi-subheading dark:text-gray-200 mb-2">Is there a free trial for Premium?</h3>
-              <p className="tadashi-text dark:text-gray-300">
+            <div className="tadashi-card">
+              <h3 className="tadashi-subheading">Is there a free trial for Premium?</h3>
+              <p className="tadashi-text">
                 We offer a 7-day free trial for new Premium subscribers. You can cancel anytime during the trial period without being charged.
               </p>
             </div>

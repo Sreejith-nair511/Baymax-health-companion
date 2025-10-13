@@ -22,7 +22,21 @@ export const sendWelcomeEmail = async (email: string, name: string) => {
       console.log(`[DEV] Sending welcome email to ${name} (${email})`);
       // Simulate email sending delay
       await new Promise(resolve => setTimeout(resolve, 1000));
-      return { success: true, message: 'Welcome email sent successfully (simulated in dev)' };
+      return { 
+        success: true, 
+        message: 'Welcome email sent successfully (simulated in dev)',
+        status: 'success'
+      };
+    }
+
+    // Check if email configuration exists
+    if (!process.env.EMAIL_HOST || !process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.warn('Email configuration missing. Skipping email send.');
+      return { 
+        success: true, 
+        message: 'Email configuration not set. Email skipped in production.',
+        status: 'warning'
+      };
     }
 
     const transporter = createTransport();
@@ -56,10 +70,20 @@ export const sendWelcomeEmail = async (email: string, name: string) => {
     const info = await transporter.sendMail(mailOptions);
     console.log('Welcome email sent:', info.messageId);
     
-    return { success: true, message: 'Welcome email sent successfully' };
+    return { 
+      success: true, 
+      message: 'Welcome email sent successfully',
+      status: 'success',
+      messageId: info.messageId
+    };
   } catch (error) {
     console.error('Error sending welcome email:', error);
-    return { success: false, message: 'Failed to send welcome email' };
+    return { 
+      success: false, 
+      message: 'Failed to send welcome email',
+      error: error instanceof Error ? error.message : 'Unknown error',
+      status: 'error'
+    };
   }
 };
 
@@ -70,7 +94,21 @@ export const sendPremiumUpgradeEmail = async (email: string, name: string) => {
       console.log(`[DEV] Sending premium upgrade email to ${name} (${email})`);
       // Simulate email sending delay
       await new Promise(resolve => setTimeout(resolve, 1000));
-      return { success: true, message: 'Premium upgrade email sent successfully (simulated in dev)' };
+      return { 
+        success: true, 
+        message: 'Premium upgrade email sent successfully (simulated in dev)',
+        status: 'success'
+      };
+    }
+
+    // Check if email configuration exists
+    if (!process.env.EMAIL_HOST || !process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.warn('Email configuration missing. Skipping email send.');
+      return { 
+        success: true, 
+        message: 'Email configuration not set. Email skipped in production.',
+        status: 'warning'
+      };
     }
 
     const transporter = createTransport();
@@ -107,9 +145,19 @@ export const sendPremiumUpgradeEmail = async (email: string, name: string) => {
     const info = await transporter.sendMail(mailOptions);
     console.log('Premium upgrade email sent:', info.messageId);
     
-    return { success: true, message: 'Premium upgrade email sent successfully' };
+    return { 
+      success: true, 
+      message: 'Premium upgrade email sent successfully',
+      status: 'success',
+      messageId: info.messageId
+    };
   } catch (error) {
     console.error('Error sending premium upgrade email:', error);
-    return { success: false, message: 'Failed to send premium upgrade email' };
+    return { 
+      success: false, 
+      message: 'Failed to send premium upgrade email',
+      error: error instanceof Error ? error.message : 'Unknown error',
+      status: 'error'
+    };
   }
 };

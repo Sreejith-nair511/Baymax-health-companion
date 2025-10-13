@@ -63,48 +63,46 @@ export default function LoginPage() {
         <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-xl overflow-hidden">
           <div className="p-8">
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2">Welcome Back</h1>
-              <p className="text-gray-600 dark:text-gray-300">
+              <h1 className="tadashi-heading">Welcome Back</h1>
+              <p className="tadashi-text">
                 Sign in to your Tadashi AI account
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="dark:text-gray-300">
-                    Email
-                  </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="tadashi-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                    placeholder="your@email.com"
-                    required
-                  />
-                </div>
+            <form onSubmit={handleSubmit} className="tadashi-form">
+              <div className="tadashi-form-group">
+                <Label htmlFor="email" className="tadashi-form-label">
+                  Email
+                </Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="tadashi-form-input"
+                  placeholder="your@email.com"
+                  required
+                />
+              </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="password" className="dark:text-gray-300">
-                    Password
-                  </Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="tadashi-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                    placeholder="••••••••"
-                    required
-                  />
-                </div>
+              <div className="tadashi-form-group">
+                <Label htmlFor="password" className="tadashi-form-label">
+                  Password
+                </Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="tadashi-form-input"
+                  placeholder="••••••••"
+                  required
+                />
               </div>
 
               <Button
                 type="submit"
-                className="tadashi-button w-full dark:bg-tadashi-blue dark:hover:bg-tadashi-darkBlue"
+                className="tadashi-button w-full mt-6"
                 disabled={loading}
               >
                 {loading ? "Signing in..." : "Sign In"}
@@ -112,7 +110,7 @@ export default function LoginPage() {
             </form>
 
             <div className="mt-6 text-center">
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="tadashi-text">
                 Don't have an account?{" "}
                 <Link href="/signup" className="text-tadashi-blue dark:text-tadashi-darkBlue font-medium hover:underline">
                   Sign up

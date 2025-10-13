@@ -104,23 +104,26 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
+/* Professional UI Components */
 .tadashi-card {
-  @apply bg-white rounded-3xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl;
+  @apply bg-white rounded-3xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl border border-gray-100;
 }
 
 .tadashi-input {
-  @apply rounded-full border-tadashi-darkGray bg-tadashi-gray px-4 py-2 focus:outline-none focus:ring-2 focus:ring-tadashi-blue transition-all duration-200;
+  @apply rounded-full border-tadashi-darkGray bg-tadashi-gray px-4 py-2 focus:outline-none focus:ring-2 focus:ring-tadashi-blue transition-all duration-200 border border-gray-200;
 }
 
 .tadashi-button {
-  @apply rounded-full bg-tadashi-blue text-white font-medium px-6 py-3 shadow-md hover:bg-tadashi-darkBlue transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-tadashi-darkBlue focus:ring-offset-2 relative overflow-hidden;
+  @apply rounded-full bg-tadashi-blue text-white font-medium px-6 py-3 shadow-md hover:bg-tadashi-darkBlue transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-tadashi-darkBlue focus:ring-offset-2 relative overflow-hidden font-semibold tracking-wide;
 }
 
 .tadashi-button-secondary {
-  @apply rounded-full bg-tadashi-gray text-gray-700 font-medium px-6 py-3 shadow-md hover:bg-tadashi-darkGray transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-tadashi-darkGray focus:ring-offset-2;
+  @apply rounded-full bg-tadashi-gray text-gray-700 font-medium px-6 py-3 shadow-md hover:bg-tadashi-darkGray transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-tadashi-darkGray focus:ring-offset-2 font-semibold tracking-wide;
 }
 
 .tadashi-container {
@@ -132,23 +135,32 @@
 }
 
 .tadashi-heading {
-  @apply text-3xl md:text-4xl font-bold text-gray-800 mb-6;
+  @apply text-3xl md:text-4xl font-bold text-gray-800 mb-6 leading-tight;
 }
 
 .tadashi-subheading {
-  @apply text-xl md:text-2xl font-semibold text-gray-700 mb-4;
+  @apply text-xl md:text-2xl font-semibold text-gray-700 mb-4 leading-snug;
 }
 
 .tadashi-text {
   @apply text-gray-600 leading-relaxed;
 }
 
+.tadashi-hero {
+  @apply text-4xl md:text-6xl font-bold text-gray-800 dark:text-gray-100 mb-6 leading-tight;
+}
+
+.tadashi-tagline {
+  @apply text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-2xl leading-relaxed;
+}
+
+/* Dark mode enhancements */
 .dark .tadashi-card {
   @apply bg-gray-800 shadow-lg p-6 transition-all duration-300 hover:shadow-xl border-gray-700;
 }
 
 .dark .tadashi-input {
-  @apply border-gray-700 bg-gray-800 focus:ring-tadashi-blue;
+  @apply border-gray-700 bg-gray-800 focus:ring-tadashi-blue text-white;
 }
 
 .dark .tadashi-button {
@@ -169,6 +181,14 @@
 
 .dark .tadashi-subheading {
   @apply text-gray-200;
+}
+
+.dark .tadashi-hero {
+  @apply text-gray-100;
+}
+
+.dark .tadashi-tagline {
+  @apply text-gray-300;
 }
 
 /* Theme-specific styles */
@@ -234,27 +254,32 @@
 
 /* Add theme-specific styles for other components */
 .theme-default .tadashi-heading,
-.theme-default .tadashi-subheading {
+.theme-default .tadashi-subheading,
+.theme-default .tadashi-hero {
   color: hsl(var(--theme-primary));
 }
 
 .theme-calm .tadashi-heading,
-.theme-calm .tadashi-subheading {
+.theme-calm .tadashi-subheading,
+.theme-calm .tadashi-hero {
   color: hsl(var(--theme-primary));
 }
 
 .theme-energetic .tadashi-heading,
-.theme-energetic .tadashi-subheading {
+.theme-energetic .tadashi-subheading,
+.theme-energetic .tadashi-hero {
   color: hsl(var(--theme-primary));
 }
 
 .theme-focus .tadashi-heading,
-.theme-focus .tadashi-subheading {
+.theme-focus .tadashi-subheading,
+.theme-focus .tadashi-hero {
   color: hsl(var(--theme-primary));
 }
 
 .theme-relax .tadashi-heading,
-.theme-relax .tadashi-subheading {
+.theme-relax .tadashi-subheading,
+.theme-relax .tadashi-hero {
   color: hsl(var(--theme-primary));
 }
 
@@ -308,6 +333,17 @@
   }
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
@@ -318,6 +354,10 @@
 
 .animate-cursor-ripple {
   animation: cursor-ripple 1s ease-out infinite;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out forwards;
 }
 
 /* Enhanced button hover effects */
@@ -358,42 +398,173 @@
   border-radius: 50%;
   background-color: rgba(74, 144, 226, 0.1);
   animation: cursor-ripple 1.5s infinite;
-}/* Enhanced button hover effects */
-.tadashi-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
 }
 
-.tadashi-button:hover::before {
-  left: 100%;
+/* Professional form styling */
+.tadashi-form {
+  @apply space-y-6;
 }
 
-/* Interactive cursor effects */
-.interactive-cursor {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: rgba(74, 144, 226, 0.3);
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
+.tadashi-form-group {
+  @apply space-y-2;
 }
 
-.interactive-cursor::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-color: rgba(74, 144, 226, 0.1);
-  animation: cursor-ripple 1.5s infinite;
+.tadashi-form-label {
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-300;
+}
+
+.tadashi-form-input {
+  @apply w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-tadashi-blue focus:border-transparent transition-all duration-200;
+}
+
+.tadashi-form-textarea {
+  @apply w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-tadashi-blue focus:border-transparent transition-all duration-200 min-h-[120px];
+}
+
+/* Professional card styling */
+.tadashi-feature-card {
+  @apply bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl border border-gray-100 dark:border-gray-700;
+}
+
+.tadashi-feature-icon {
+  @apply rounded-full bg-tadashi-blue/10 dark:bg-tadashi-blue/20 p-3 w-12 h-12 flex items-center justify-center mb-4;
+}
+
+.tadashi-feature-title {
+  @apply text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2;
+}
+
+.tadashi-feature-description {
+  @apply text-gray-600 dark:text-gray-400;
+}
+
+/* Professional pricing card styling */
+.tadashi-pricing-card {
+  @apply bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-6 transition-all duration-300 hover:shadow-2xl border border-gray-100 dark:border-gray-700 relative overflow-hidden;
+}
+
+.tadashi-pricing-popular {
+  @apply border-2 border-tadashi-blue shadow-xl scale-105;
+}
+
+.tadashi-pricing-badge {
+  @apply absolute top-0 right-0 bg-tadashi-blue text-white px-4 py-1 text-sm font-bold rounded-bl-lg;
+}
+
+.tadashi-pricing-title {
+  @apply text-2xl font-bold text-gray-800 dark:text-gray-200 mb-2;
+}
+
+.tadashi-pricing-price {
+  @apply text-3xl font-bold text-gray-800 dark:text-gray-100;
+}
+
+.tadashi-pricing-description {
+  @apply text-gray-600 dark:text-gray-400 mt-2 mb-6;
+}
+
+.tadashi-pricing-feature {
+  @apply flex items-start mb-3;
+}
+
+.tadashi-pricing-feature-icon {
+  @apply h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0;
+}
+
+.tadashi-pricing-feature-text {
+  @apply text-gray-700 dark:text-gray-300;
+}
+
+/* Professional navigation styling */
+.tadashi-navbar {
+  @apply fixed w-full z-50 transition-all duration-300 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm;
+}
+
+.tadashi-navbar-scrolled {
+  @apply bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm;
+}
+
+.tadashi-navbar-link {
+  @apply px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-tadashi-darkBlue dark:hover:text-tadashi-blue transition-colors duration-200;
+}
+
+.tadashi-navbar-mobile-link {
+  @apply block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-tadashi-darkBlue dark:hover:text-tadashi-blue hover:bg-tadashi-lightBlue dark:hover:bg-gray-700 transition-colors duration-200;
+}
+
+/* Professional footer styling */
+.tadashi-footer {
+  @apply bg-gray-50 dark:bg-gray-800 py-12;
+}
+
+.tadashi-footer-heading {
+  @apply text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4;
+}
+
+.tadashi-footer-link {
+  @apply text-gray-600 dark:text-gray-400 hover:text-tadashi-darkBlue dark:hover:text-tadashi-blue transition-colors duration-200;
+}
+
+.tadashi-footer-text {
+  @apply text-gray-600 dark:text-gray-400;
+}
+
+/* Professional chat interface styling */
+.tadashi-chat-container {
+  @apply bg-white dark:bg-gray-900 rounded-3xl shadow-xl overflow-hidden;
+}
+
+.tadashi-chat-messages {
+  @apply h-[600px] overflow-y-auto p-4 space-y-4 bg-tadashi-lightBlue dark:bg-gray-800 relative;
+}
+
+.tadashi-chat-input-form {
+  @apply p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 relative;
+}
+
+.tadashi-chat-user-message {
+  @apply max-w-[80%] rounded-2xl p-3 bg-tadashi-blue text-white dark:bg-tadashi-darkBlue ml-auto;
+}
+
+.tadashi-chat-assistant-message {
+  @apply max-w-[80%] rounded-2xl p-3 bg-white dark:bg-gray-700 shadow-md mr-auto;
+}
+
+/* Professional loading animations */
+.tadashi-loading-dots {
+  @apply flex space-x-1;
+}
+
+.tadashi-loading-dot {
+  @apply w-2 h-2 bg-tadashi-blue rounded-full animate-bounce;
+}
+
+.tadashi-loading-dot-1 {
+  animation-delay: 0.1s;
+}
+
+.tadashi-loading-dot-2 {
+  animation-delay: 0.2s;
+}
+
+.tadashi-loading-dot-3 {
+  animation-delay: 0.3s;
+}
+
+/* Professional premium badge */
+.tadashi-premium-badge {
+  @apply bg-gradient-to-r from-tadashi-blue to-tadashi-darkBlue text-white text-xs px-2 py-1 rounded-full font-semibold;
+}
+
+/* Professional theme selector */
+.tadashi-theme-selector {
+  @apply flex items-center gap-2 p-2 rounded-lg cursor-pointer hover:bg-tadashi-gray dark:hover:bg-gray-700 transition-colors duration-200;
+}
+
+.tadashi-theme-color {
+  @apply w-4 h-4 rounded-full;
+}
+
+.tadashi-theme-active {
+  @apply bg-tadashi-blue/20;
 }

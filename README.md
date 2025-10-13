@@ -1,70 +1,174 @@
-# Tadashi AI - Healthcare Companion
+# Tadashi AI - Your Personal Healthcare Companion
 
-Tadashi AI is a healthcare companion application built with Next.js 14, TypeScript, and Tailwind CSS. It features AI-powered health assistance using Mistral AI, Text-to-Speech (TTS) and Speech-to-Text (STT) capabilities, premium subscription features, and accessibility enhancements.
+<p align="center">
+  <img src="public/images/tadashi-hello.gif" alt="Tadashi AI" width="200" />
+</p>
+
+<p align="center">
+  <strong>An AI-powered healthcare companion inspired by Disney's Baymax</strong>
+</p>
+
+<p align="center">
+  <a href="#features">Features</a> •
+  <a href="#technology-stack">Tech Stack</a> •
+  <a href="#getting-started">Getting Started</a> •
+  <a href="#contributing">Contributing</a>
+</p>
+
+## Overview
+
+Tadashi AI is a comprehensive healthcare companion application that combines the caring nature of Disney's Baymax with modern AI technology. Built with Next.js and TypeScript, it provides users with personalized health advice, symptom checking, and wellness tracking capabilities.
 
 ## Features
 
-- **AI-Powered Health Assistance**: Using Mistral AI for healthcare responses
-- **Voice Features**: Text-to-Speech (TTS) and Speech-to-Text (STT) functionality
-- **Premium Subscription**: ₹49/month subscription for enhanced features
-- **Accessibility**: Enhanced features for people with disabilities
-- **Theming**: Different themes for different moods
-- **Responsive Design**: Mobile-ready polished UI
+### 🤖 AI-Powered Healthcare Assistant
+- Interactive chatbot with health expertise
+- Symptom analysis and general health advice
+- Integration with Mistral AI for advanced responses
+- Local fallback for offline functionality
+
+### 🎙️ Voice Interaction
+- Speech-to-Text (STT) capabilities
+- Text-to-Speech (TTS) functionality
+- Voice-activated health queries
+- Premium voice features
+
+### 🎨 Personalized Experience
+- Multiple mood-based themes (Calm, Energetic, Focus, Relax)
+- Dark/light mode support
+- Animated UI with interactive elements
+- Personalized health recommendations
+
+### 🔐 User Management
+- Secure authentication system
+- User profiles with health preferences
+- Premium subscription features
+- Session management
+
+### 🏥 Healthcare Tools
+- Health check assessments
+- Wellness tracking
+- Emergency response protocols
+- Preventive care reminders
+
+## Technology Stack
+
+- **Frontend**: Next.js 14, React, TypeScript, Tailwind CSS
+- **UI Components**: shadcn/ui, Framer Motion, Lucide React
+- **Backend**: Next.js API Routes
+- **Database**: File-based JSON storage (development)
+- **AI Integration**: Mistral AI API
+- **Email**: Nodemailer
+- **Voice**: Web Speech API
+- **State Management**: React Context API
+- **Deployment**: Vercel
 
 ## Getting Started
 
-1. Install dependencies:
+### Prerequisites
+
+- Node.js 18+
+- pnpm (recommended) or npm
+- Mistral AI API key (for AI features)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Sreejith-nair511/Moltres-005G.git
+   cd Moltres-005G
+   ```
+
+2. Install dependencies:
    ```bash
    pnpm install
+   # or
+   npm install
    ```
 
-2. Start the development server:
+3. Set up environment variables:
+   Create a `.env.local` file in the root directory:
+   ```env
+   MISTRAL_API_KEY=your_mistral_api_key
+   EMAIL_HOST=smtp.your-email-provider.com
+   EMAIL_PORT=587
+   EMAIL_USER=your_email@example.com
+   EMAIL_PASS=your_email_password
+   ```
+
+4. Run the development server:
    ```bash
    pnpm dev
+   # or
+   npm run dev
    ```
 
-3. Open [http://localhost:3001](http://localhost:3001) in your browser
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Environment Variables
+### Building for Production
 
-Create a `.env.local` file with the following variables:
-- `MISTRAL_API_KEY`: Your Mistral AI API key
-- `EMAIL_USER`: Your email address for sending notifications
-- `EMAIL_PASS`: Your email password or app-specific password
-
-## Known Issues and Solutions
-
-### Webpack Warnings
-
-You may see warnings like:
-```
-Managed item ... isn't a directory or doesn't contain a package.json
+```bash
+pnpm build
+# or
+npm run build
 ```
 
-These are harmless warnings related to optional SWC packages that Next.js checks for optimization. They don't affect functionality.
+### Running Tests
 
-### CSS Diagnostic Warnings
+```bash
+# Run comprehensive system tests
+node test-comprehensive.js
 
-Your IDE may show warnings about `@tailwind` and `@apply` directives. These are false positives as they are valid Tailwind CSS syntax.
+# Test database functionality
+curl http://localhost:3000/api/init-db
 
-To suppress these in VS Code, we've included a `.vscode/settings.json` file that disables CSS validation for these rules.
+# Test email functionality
+curl -X POST http://localhost:3000/api/test-email -H "Content-Type: application/json" -d "{\"email\":\"test@example.com\",\"name\":\"Test User\"}"
+```
 
 ## Project Structure
 
-- `/app` - Next.js 14 App Router pages and layouts
-- `/components` - Reusable React components
-- `/contexts` - React context providers
-- `/hooks` - Custom React hooks
-- `/lib` - Utility functions and libraries
-- `/public` - Static assets and images
-- `/styles` - Global styles and Tailwind configuration
+```
+├── app/                    # Next.js 14 app directory
+│   ├── api/               # API routes
+│   ├── chatbot/           # Chatbot page
+│   ├── tts-stt/           # Voice features page
+│   └── ...                # Other pages
+├── components/            # React components
+├── contexts/              # React context providers
+├── data/                  # Database files
+├── lib/                   # Utility functions
+├── public/                # Static assets
+└── styles/                # Global styles
+```
 
-## Technologies Used
+## Contributing
 
-- Next.js 14 with App Router
-- TypeScript
-- Tailwind CSS
-- React
-- Mistral AI API
-- Web Speech API
-- Nodemailer
+We welcome contributions to Tadashi AI! Here's how you can help:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### Development Guidelines
+
+- Follow the existing code style
+- Write clear commit messages
+- Test your changes thoroughly
+- Update documentation as needed
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Inspired by Disney's Baymax character from Big Hero 6
+- Built with Next.js and modern web technologies
+- Powered by Mistral AI for advanced healthcare insights
+
+## Support
+
+For support, please open an issue on GitHub or contact the development team.

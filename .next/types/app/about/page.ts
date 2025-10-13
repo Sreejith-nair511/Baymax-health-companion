@@ -1,4 +1,4 @@
-// File: C:\Users\sreej\Downloads\Baymax-health-companion-main\Baymax-health-companion-main\app\about\page.tsx
+// File: C:\Tadashi\Baymax-health-companion\app\about\page.tsx
 import * as entry from '../../../../app/about/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
