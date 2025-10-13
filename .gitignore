@@ -62,3 +62,7 @@ temp/
 !.next/images-manifest.json
 !.next/prerender-manifest.json
 !.next/routes-manifest.json
+
+# System files
+.DS_Store
+desktop.ini
