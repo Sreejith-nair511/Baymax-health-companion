@@ -169,6 +169,31 @@ if (allApiRoutesExist) {
   console.log('   Some API routes are missing!\n');
 }
 
+// Test 7: Check documentation files
+console.log('7. Checking documentation files...');
+const docs = [
+  'README.md',
+  'IMPROVEMENTS_SUMMARY.md',
+  'UI_POLISH_SUMMARY.md'
+];
+
+let allDocsExist = true;
+for (const doc of docs) {
+  const fullPath = path.join(__dirname, doc);
+  if (fs.existsSync(fullPath)) {
+    console.log(`   ✓ ${doc}`);
+  } else {
+    console.log(`   ✗ ${doc} - MISSING`);
+    allDocsExist = false;
+  }
+}
+
+if (allDocsExist) {
+  console.log('   All documentation files are present.\n');
+} else {
+  console.log('   Some documentation files are missing!\n');
+}
+
 console.log('=== Test Summary ===');
 console.log('If all checks above show ✓, the Tadashi AI system is properly configured.');
 console.log('The development server should be running on http://localhost:3000');
