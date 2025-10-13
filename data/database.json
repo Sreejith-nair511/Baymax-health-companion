@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "id": "f8ysbdi63ulw4k5jr7z2ui",
+      "email": "test@example.com",
+      "password": "password123",
+      "name": "Test User",
+      "isPremium": true,
+      "createdAt": "2025-10-12T16:10:04.088Z"
+    },
+    {
+      "id": "d6wgki7gboi1ehidjno9c",
+      "email": "sreejith.23ise@cambridge.edu.in",
+      "password": "dv,;R=kYpw?L8EZ",
+      "name": "sree",
+      "isPremium": true,
+      "createdAt": "2025-10-12T16:18:09.911Z"
+    },
+    {
+      "id": "wqglsa42dt06e58vqwqibw",
+      "email": "nambiarshree005@gmail.com",
+      "password": "123456",
+      "name": "sreej",
+      "isPremium": true,
+      "createdAt": "2025-10-12T19:34:07.978Z"
+    },
+    {
+      "id": "n0xyxq5s2fhg8ncgnvobf",
+      "email": "titusvaleria556@gmail.com",
+      "password": "123456",
+      "name": "sreeji",
+      "isPremium": true,
+      "createdAt": "2025-10-12T20:04:40.913Z"
+    },
+    {
+      "id": "2sna32iaqcbn26ym8wuef",
+      "email": "ssvu45jig@mozmail.com",
+      "password": "z_@fXHu!bhZ9,B+",
+      "name": "sree",
+      "isPremium": true,
+      "createdAt": "2025-10-12T20:35:46.030Z"
+    }
+  ]
+}

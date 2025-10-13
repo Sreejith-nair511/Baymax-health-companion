@@ -1,0 +1,399 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Default theme variables - these will be overridden by theme classes */
+:root {
+  --theme-primary: 199 98% 48%; /* tadashi-blue */
+  --theme-secondary: 190 80% 40%; /* tadashi-darkBlue */
+  --theme-accent: 210 40% 98%; /* white */
+  --theme-background: 210 40% 98%; /* light background */
+}
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 199 98% 48%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 199 98% 48%;
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 199 98% 48%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 199 98% 48%;
+  }
+
+  /* Default theme */
+  .theme-default {
+    --theme-primary: 199 98% 48%; /* tadashi-blue */
+    --theme-secondary: 190 80% 40%; /* tadashi-darkBlue */
+    --theme-accent: 210 40% 98%; /* white */
+    --theme-background: 210 40% 98%; /* light background */
+  }
+
+  /* Calm theme - soothing blues and greens */
+  .theme-calm {
+    --theme-primary: 180 70% 40%; /* teal */
+    --theme-secondary: 160 60% 35%; /* darker teal */
+    --theme-accent: 190 90% 95%; /* light cyan */
+    --theme-background: 180 30% 97%; /* very light teal */
+  }
+
+  /* Energetic theme - vibrant oranges and reds */
+  .theme-energetic {
+    --theme-primary: 20 90% 55%; /* orange */
+    --theme-secondary: 10 80% 45%; /* red-orange */
+    --theme-accent: 40 100% 90%; /* light yellow */
+    --theme-background: 30 100% 95%; /* very light orange */
+  }
+
+  /* Focus theme - clean purples and blues */
+  .theme-focus {
+    --theme-primary: 260 70% 50%; /* purple */
+    --theme-secondary: 250 60% 40%; /* darker purple */
+    --theme-accent: 270 90% 95%; /* light lavender */
+    --theme-background: 260 30% 97%; /* very light purple */
+  }
+
+  /* Relax theme - soft pinks and peaches */
+  .theme-relax {
+    --theme-primary: 10 70% 70%; /* peach */
+    --theme-secondary: 0 60% 60%; /* soft red */
+    --theme-accent: 20 90% 95%; /* light peach */
+    --theme-background: 15 30% 97%; /* very light peach */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+.tadashi-card {
+  @apply bg-white rounded-3xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl;
+}
+
+.tadashi-input {
+  @apply rounded-full border-tadashi-darkGray bg-tadashi-gray px-4 py-2 focus:outline-none focus:ring-2 focus:ring-tadashi-blue transition-all duration-200;
+}
+
+.tadashi-button {
+  @apply rounded-full bg-tadashi-blue text-white font-medium px-6 py-3 shadow-md hover:bg-tadashi-darkBlue transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-tadashi-darkBlue focus:ring-offset-2 relative overflow-hidden;
+}
+
+.tadashi-button-secondary {
+  @apply rounded-full bg-tadashi-gray text-gray-700 font-medium px-6 py-3 shadow-md hover:bg-tadashi-darkGray transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-tadashi-darkGray focus:ring-offset-2;
+}
+
+.tadashi-container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.tadashi-section {
+  @apply py-12 md:py-24;
+}
+
+.tadashi-heading {
+  @apply text-3xl md:text-4xl font-bold text-gray-800 mb-6;
+}
+
+.tadashi-subheading {
+  @apply text-xl md:text-2xl font-semibold text-gray-700 mb-4;
+}
+
+.tadashi-text {
+  @apply text-gray-600 leading-relaxed;
+}
+
+.dark .tadashi-card {
+  @apply bg-gray-800 shadow-lg p-6 transition-all duration-300 hover:shadow-xl border-gray-700;
+}
+
+.dark .tadashi-input {
+  @apply border-gray-700 bg-gray-800 focus:ring-tadashi-blue;
+}
+
+.dark .tadashi-button {
+  @apply bg-tadashi-darkBlue hover:bg-tadashi-blue;
+}
+
+.dark .tadashi-button-secondary {
+  @apply bg-gray-700 text-gray-200 hover:bg-gray-600;
+}
+
+.dark .tadashi-text {
+  @apply text-gray-300;
+}
+
+.dark .tadashi-heading {
+  @apply text-gray-100;
+}
+
+.dark .tadashi-subheading {
+  @apply text-gray-200;
+}
+
+/* Theme-specific styles */
+.theme-default .tadashi-button {
+  background-color: hsl(var(--theme-primary));
+}
+
+.theme-default .tadashi-button:hover {
+  background-color: hsl(var(--theme-secondary));
+}
+
+.theme-default .tadashi-button:focus {
+  box-shadow: 0 0 0 2px hsl(var(--theme-secondary));
+}
+
+.theme-calm .tadashi-button {
+  background-color: hsl(var(--theme-primary));
+}
+
+.theme-calm .tadashi-button:hover {
+  background-color: hsl(var(--theme-secondary));
+}
+
+.theme-calm .tadashi-button:focus {
+  box-shadow: 0 0 0 2px hsl(var(--theme-secondary));
+}
+
+.theme-energetic .tadashi-button {
+  background-color: hsl(var(--theme-primary));
+}
+
+.theme-energetic .tadashi-button:hover {
+  background-color: hsl(var(--theme-secondary));
+}
+
+.theme-energetic .tadashi-button:focus {
+  box-shadow: 0 0 0 2px hsl(var(--theme-secondary));
+}
+
+.theme-focus .tadashi-button {
+  background-color: hsl(var(--theme-primary));
+}
+
+.theme-focus .tadashi-button:hover {
+  background-color: hsl(var(--theme-secondary));
+}
+
+.theme-focus .tadashi-button:focus {
+  box-shadow: 0 0 0 2px hsl(var(--theme-secondary));
+}
+
+.theme-relax .tadashi-button {
+  background-color: hsl(var(--theme-primary));
+}
+
+.theme-relax .tadashi-button:hover {
+  background-color: hsl(var(--theme-secondary));
+}
+
+.theme-relax .tadashi-button:focus {
+  box-shadow: 0 0 0 2px hsl(var(--theme-secondary));
+}
+
+/* Add theme-specific styles for other components */
+.theme-default .tadashi-heading,
+.theme-default .tadashi-subheading {
+  color: hsl(var(--theme-primary));
+}
+
+.theme-calm .tadashi-heading,
+.theme-calm .tadashi-subheading {
+  color: hsl(var(--theme-primary));
+}
+
+.theme-energetic .tadashi-heading,
+.theme-energetic .tadashi-subheading {
+  color: hsl(var(--theme-primary));
+}
+
+.theme-focus .tadashi-heading,
+.theme-focus .tadashi-subheading {
+  color: hsl(var(--theme-primary));
+}
+
+.theme-relax .tadashi-heading,
+.theme-relax .tadashi-subheading {
+  color: hsl(var(--theme-primary));
+}
+
+/* Animation classes */
+.animate-slideUp-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-slideUp-delay-400 {
+  animation-delay: 0.4s;
+}
+
+/* Animation delay classes for bouncing dots */
+.animate-bounce-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animate-bounce-delay-200 {
+  animation-delay: 0.2s;
+}
+
+/* Custom animations for interactive elements */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.4;
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 20px rgba(74, 144, 226, 0.8);
+  }
+}
+
+@keyframes cursor-ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-cursor-ripple {
+  animation: cursor-ripple 1s ease-out infinite;
+}
+
+/* Enhanced button hover effects */
+.tadashi-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.tadashi-button:hover::before {
+  left: 100%;
+}
+
+/* Interactive cursor effects */
+.interactive-cursor {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(74, 144, 226, 0.3);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.interactive-cursor::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(74, 144, 226, 0.1);
+  animation: cursor-ripple 1.5s infinite;
+}/* Enhanced button hover effects */
+.tadashi-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.tadashi-button:hover::before {
+  left: 100%;
+}
+
+/* Interactive cursor effects */
+.interactive-cursor {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(74, 144, 226, 0.3);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.interactive-cursor::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(74, 144, 226, 0.1);
+  animation: cursor-ripple 1.5s infinite;
+}
