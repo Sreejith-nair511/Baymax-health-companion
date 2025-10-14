@@ -2,6 +2,11 @@ import nodemailer from 'nodemailer';
 
 // Create a transporter using SMTP
 const createTransport = () => {
+  // Check if required environment variables exist
+  if (!process.env.EMAIL_HOST || !process.env.EMAIL_PORT || !process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    throw new Error('Missing required email configuration environment variables');
+  }
+
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: parseInt(process.env.EMAIL_PORT || '587'),
@@ -78,6 +83,15 @@ export const sendWelcomeEmail = async (email: string, name: string) => {
     };
   } catch (error) {
     console.error('Error sending welcome email:', error);
+    // In production, we don't want to fail the entire operation if email fails
+    if (process.env.NODE_ENV === 'production') {
+      console.warn('Email sending failed in production, but continuing with operation');
+      return { 
+        success: true, 
+        message: 'User created successfully (email delivery failed)',
+        status: 'warning'
+      };
+    }
     return { 
       success: false, 
       message: 'Failed to send welcome email',
@@ -153,6 +167,15 @@ export const sendPremiumUpgradeEmail = async (email: string, name: string) => {
     };
   } catch (error) {
     console.error('Error sending premium upgrade email:', error);
+    // In production, we don't want to fail the entire operation if email fails
+    if (process.env.NODE_ENV === 'production') {
+      console.warn('Email sending failed in production, but continuing with operation');
+      return { 
+        success: true, 
+        message: 'Premium upgrade successful (email delivery failed)',
+        status: 'warning'
+      };
+    }
     return { 
       success: false, 
       message: 'Failed to send premium upgrade email',

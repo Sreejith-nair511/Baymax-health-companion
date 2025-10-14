@@ -1,8 +1,16 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { findUserByEmail } from "@/lib/db"
+import { validateEnvironment } from "@/lib/env-validator"
 
 export async function POST(req: NextRequest) {
   try {
+    // Validate environment variables
+    const envValidation = validateEnvironment()
+    if (!envValidation.isValid && process.env.NODE_ENV !== 'development') {
+      console.warn('Environment validation failed:', envValidation.errors)
+      // Don't fail in development, but log the issues
+    }
+
     const { email, password } = await req.json()
 
     // Validate input
