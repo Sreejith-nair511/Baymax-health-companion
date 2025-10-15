@@ -36,6 +36,30 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    // Check if database is enabled
+    const isDatabaseEnabled = process.env.ENABLE_DATABASE !== 'false'
+    if (!isDatabaseEnabled) {
+      console.log('Database is disabled, using temporary user authentication')
+      // In temporary mode, we'll simulate a successful login with a temporary user
+      const tempUser = {
+        id: 'temp-user-' + Math.random().toString(36).substring(2, 10),
+        email,
+        password, // Note: In a real app, this should be hashed
+        name: email.split('@')[0], // Use email prefix as name
+        isPremium: false,
+        createdAt: new Date().toISOString()
+      }
+      
+      // Return success response (without password)
+      const { password: _, ...userWithoutPassword } = tempUser
+      return NextResponse.json({ 
+        message: "Login successful (temporary mode)", 
+        user: userWithoutPassword,
+        status: "success",
+        timestamp: new Date().toISOString()
+      })
+    }
+
     // Find user
     const user = findUserByEmail(email)
     

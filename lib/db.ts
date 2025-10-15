@@ -1,5 +1,15 @@
 import fs from 'fs'
 import path from 'path'
+import { 
+  findUserByEmail as tempFindUserByEmail,
+  findUserById as tempFindUserById,
+  createUser as tempCreateUser,
+  updateUserPremiumStatus as tempUpdateUserPremiumStatus,
+  initTempUserStore
+} from '@/lib/temp-user-store'
+
+// Check if database is enabled via environment variable
+const isDatabaseEnabled = process.env.ENABLE_DATABASE !== 'false'
 
 // Define the User type
 export interface User {
@@ -29,6 +39,13 @@ const getDbPath = () => {
 
 // Initialize the database
 export const initDB = () => {
+  // If database is disabled, use temporary storage
+  if (!isDatabaseEnabled) {
+    console.log('Database is disabled, initializing temporary user store')
+    initTempUserStore()
+    return
+  }
+
   // Check if we're in a browser environment
   if (typeof window !== 'undefined') {
     console.warn('initDB called in browser environment, skipping')
@@ -61,6 +78,11 @@ export const initDB = () => {
 
 // Read the database
 const readDB = (): Database => {
+  // If database is disabled, return empty database
+  if (!isDatabaseEnabled) {
+    return { users: [] }
+  }
+
   // Check if we're in a browser environment
   if (typeof window !== 'undefined') {
     throw new Error('Database operations are not available in the browser')
@@ -87,6 +109,11 @@ const readDB = (): Database => {
 
 // Write to the database
 const writeDB = (data: Database) => {
+  // If database is disabled, do nothing
+  if (!isDatabaseEnabled) {
+    return
+  }
+
   // Check if we're in a browser environment
   if (typeof window !== 'undefined') {
     throw new Error('Database operations are not available in the browser')
@@ -104,6 +131,11 @@ const writeDB = (data: Database) => {
 
 // Find a user by email
 export const findUserByEmail = (email: string): User | undefined => {
+  // If database is disabled, use temporary storage
+  if (!isDatabaseEnabled) {
+    return tempFindUserByEmail(email)
+  }
+
   // Check if we're in a browser environment
   if (typeof window !== 'undefined') {
     throw new Error('Database operations are not available in the browser')
@@ -126,6 +158,11 @@ export const findUserByEmail = (email: string): User | undefined => {
 
 // Find a user by ID
 export const findUserById = (id: string): User | undefined => {
+  // If database is disabled, use temporary storage
+  if (!isDatabaseEnabled) {
+    return tempFindUserById(id)
+  }
+
   // Check if we're in a browser environment
   if (typeof window !== 'undefined') {
     throw new Error('Database operations are not available in the browser')
@@ -148,6 +185,11 @@ export const findUserById = (id: string): User | undefined => {
 
 // Create a new user
 export const createUser = (userData: Omit<User, 'id' | 'isPremium' | 'createdAt'>): User => {
+  // If database is disabled, use temporary storage
+  if (!isDatabaseEnabled) {
+    return tempCreateUser(userData)
+  }
+
   // Check if we're in a browser environment
   if (typeof window !== 'undefined') {
     throw new Error('Database operations are not available in the browser')
@@ -183,6 +225,11 @@ export const createUser = (userData: Omit<User, 'id' | 'isPremium' | 'createdAt'
 
 // Update user premium status
 export const updateUserPremiumStatus = (userId: string, isPremium: boolean): User | null => {
+  // If database is disabled, use temporary storage
+  if (!isDatabaseEnabled) {
+    return tempUpdateUserPremiumStatus(userId, isPremium)
+  }
+
   // Check if we're in a browser environment
   if (typeof window !== 'undefined') {
     throw new Error('Database operations are not available in the browser')

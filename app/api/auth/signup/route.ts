@@ -59,6 +59,38 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    // Check if database is enabled
+    const isDatabaseEnabled = process.env.ENABLE_DATABASE !== 'false'
+    if (!isDatabaseEnabled) {
+      console.log('Database is disabled, using temporary user creation')
+      // In temporary mode, we'll still create a user object but not persist it
+      const tempUser = {
+        id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+        email,
+        password,
+        name,
+        isPremium: false,
+        createdAt: new Date().toISOString()
+      }
+      
+      // Send welcome email
+      try {
+        await sendWelcomeEmail(email, name)
+      } catch (emailError) {
+        console.error("Failed to send welcome email:", emailError)
+        // Don't fail the signup if email fails, just log it
+      }
+      
+      // Return success response (without password)
+      const { password: _, ...userWithoutPassword } = tempUser
+      return NextResponse.json({ 
+        message: "User created successfully (temporary mode)", 
+        user: userWithoutPassword,
+        status: "success",
+        timestamp: new Date().toISOString()
+      })
+    }
+
     // Create user
     const user = createUser({ email, password, name })
 
