@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 
 export async function POST(req: NextRequest) {
   try {
-    const { prompt } = await req.json()
+    const { prompt, language, languageName } = await req.json()
 
     if (!prompt) {
       return NextResponse.json({ 
@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Add a system instruction to guide Mistral's responses for health-related queries
+    // Enhanced to handle multilingual inputs
     const systemInstruction = `
       You are Tadashi AI, a personal healthcare companion. Your responses should be:
       1. Helpful and informative about general wellness
@@ -29,8 +30,13 @@ export async function POST(req: NextRequest) {
       3. Clear about not providing medical diagnosis
       4. Focused on general health advice and wellness tips
       5. Formatted in a clear, readable way with bullet points where appropriate
+      6. Respond in the same language as the user's input when possible
+      7. If the user is speaking in an Indian language, respond with cultural sensitivity
+      8. Keep responses simple and easy to understand, especially for users with limited literacy
       
       If asked about serious medical conditions, remind the user to consult with a healthcare professional.
+      
+      User's preferred language: ${languageName} (${language})
     `
 
     const response = await fetch(

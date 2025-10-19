@@ -99,7 +99,7 @@ export default function Home() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="tadashi-hero"
           >
-            Tadashi AI
+            Tadashi AI - Open Beta
           </motion.h1>
           
           <motion.p
@@ -108,14 +108,14 @@ export default function Home() {
             transition={{ delay: 0.4, duration: 0.5 }}
             className="tadashi-tagline"
           >
-            Your personal healthcare companion
+            India's First AI Healthcare Companion - Now in Open Beta
           </motion.p>
           
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.5 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-8"
           >
             <Link href="/chatbot">
               <Button className="tadashi-button w-full sm:w-auto text-lg px-8 py-4">
@@ -129,12 +129,42 @@ export default function Home() {
             </Link>
           </motion.div>
           
+          {/* India-specific features */}
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.5 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 mb-8 w-full max-w-3xl"
+          >
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
+              <h3 className="font-bold text-lg mb-2 text-tadashi-darkBlue dark:text-tadashi-blue">13 Indian Languages</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">Support for Hindi, Tamil, Telugu, Bengali, Marathi, and more</p>
+            </div>
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
+              <h3 className="font-bold text-lg mb-2 text-tadashi-darkBlue dark:text-tadashi-blue">Low Literacy Support</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">Voice-first interface with visual aids for all users</p>
+            </div>
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
+              <h3 className="font-bold text-lg mb-2 text-tadashi-darkBlue dark:text-tadashi-blue">Free During Beta</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">All premium features unlocked for beta testers</p>
+            </div>
+          </motion.div>
+          
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{ delay: 0.8, duration: 1 }}
+            transition={{ delay: 1.0, duration: 1 }}
             className="h-1 bg-tadashi-blue w-32 mt-8 rounded-full"
           />
+          
+          <motion.p
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.5 }}
+            className="text-sm text-gray-600 dark:text-gray-400 mt-4"
+          >
+            Help us make healthcare accessible to all Indians - Join our open beta today!
+          </motion.p>
         </div>
       </motion.div>
     </div>

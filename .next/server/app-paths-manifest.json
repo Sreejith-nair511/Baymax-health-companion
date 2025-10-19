@@ -1,7 +1,7 @@
 {
   "/page": "app/page.js",
-  "/signup/page": "app/signup/page.js",
-  "/tts-stt/page": "app/tts-stt/page.js",
   "/premium/page": "app/premium/page.js",
+  "/chatbot/page": "app/chatbot/page.js",
+  "/health-check/page": "app/health-check/page.js",
   "/about/page": "app/about/page.js"
 }

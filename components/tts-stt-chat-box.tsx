@@ -6,7 +6,7 @@ import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Loader2, Send, Mic, MicOff, Volume2, Lock, Accessibility } from "lucide-react"
+import { Loader2, Send, Mic, MicOff, Volume2, Lock, Accessibility, Languages, Eye, EyeOff, Type } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { usePremium } from "@/contexts/premium-context"
 import Link from "next/link"
@@ -61,8 +61,43 @@ interface SpeechRecognitionAlternative {
   confidence: number;
 }
 
+// Indian language options
+const indianLanguages = [
+  { code: "en-US", name: "English", description: "English (India)" },
+  { code: "hi-IN", name: "हिंदी", description: "Hindi" },
+  { code: "bn-IN", name: "বাংলা", description: "Bengali" },
+  { code: "te-IN", name: "తెలుగు", description: "Telugu" },
+  { code: "mr-IN", name: "मराठी", description: "Marathi" },
+  { code: "ta-IN", name: "தமிழ்", description: "Tamil" },
+  { code: "ur-IN", name: "اردو", description: "Urdu" },
+  { code: "gu-IN", name: "ગુજરાતી", description: "Gujarati" },
+  { code: "kn-IN", name: "ಕನ್ನಡ", description: "Kannada" },
+  { code: "ml-IN", name: "മലയാളം", description: "Malayalam" },
+  { code: "pa-IN", name: "ਪੰਜਾਬੀ", description: "Punjabi" },
+  { code: "or-IN", name: "ଓଡ଼ିଆ", description: "Odia" },
+  { code: "as-IN", name: "অসমীয়া", description: "Assamese" },
+];
+
+// Common health phrases for quick access
+const commonHealthPhrases = [
+  "I have a headache",
+  "I feel tired",
+  "Stomach pain",
+  "Difficulty sleeping",
+  "Chest pain",
+  "Fever",
+  "Cough",
+  "Body ache",
+  "Need medicine",
+  "Doctor appointment"
+];
+
 export default function TtsSttChatBox() {
-  const { isPremium, user } = usePremium()
+  // For open beta, we'll allow access without authentication
+  // const { isPremium, user } = usePremium()
+  const isPremium = true; // For open beta, treat everyone as premium
+  const user = { id: 'open-beta-user', name: 'Open Beta User', isPremium: true }; // Mock user for open beta
+  
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -73,6 +108,10 @@ export default function TtsSttChatBox() {
   const [isLoading, setIsLoading] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
   const [isSpeaking, setIsSpeaking] = useState(false)
+  const [selectedLanguage, setSelectedLanguage] = useState(indianLanguages[0]) // Default to English
+  const [showQuickPhrases, setShowQuickPhrases] = useState(false)
+  const [fontSize, setFontSize] = useState("base") // base, large, xl
+  const [showVisualAids, setShowVisualAids] = useState(true)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const { toast } = useToast()
@@ -85,7 +124,7 @@ export default function TtsSttChatBox() {
 
   if (recognition) {
     recognition.continuous = false
-    recognition.lang = "en-US"
+    recognition.lang = selectedLanguage.code
     recognition.interimResults = false
     recognition.maxAlternatives = 1
 
@@ -95,7 +134,7 @@ export default function TtsSttChatBox() {
       setIsRecording(false)
       toast({
         title: "Voice input received",
-        description: "Processing your voice message",
+        description: `Heard in ${selectedLanguage.name}: ${transcript}`,
       })
     }
 
@@ -113,7 +152,16 @@ export default function TtsSttChatBox() {
     }
   }
 
+  // Update recognition language when selected language changes
+  useEffect(() => {
+    if (recognition) {
+      recognition.lang = selectedLanguage.code;
+    }
+  }, [selectedLanguage, recognition]);
+
   const toggleRecording = () => {
+    // Remove premium check for open beta
+    /*
     if (!isPremium) {
       toast({
         title: "Premium Feature",
@@ -122,6 +170,7 @@ export default function TtsSttChatBox() {
       })
       return
     }
+    */
 
     if (!recognition) {
       toast({
@@ -141,7 +190,7 @@ export default function TtsSttChatBox() {
         setIsRecording(true)
         toast({
           title: "Listening...",
-          description: "Speak clearly into your microphone",
+          description: `Speak in ${selectedLanguage.name} (${selectedLanguage.description})`,
         })
       } catch (error) {
         setIsRecording(false)
@@ -156,6 +205,8 @@ export default function TtsSttChatBox() {
 
   // Text-to-Speech functionality
   const speak = (text: string) => {
+    // Remove premium check for open beta
+    /*
     if (!isPremium) {
       toast({
         title: "Premium Feature",
@@ -164,21 +215,25 @@ export default function TtsSttChatBox() {
       })
       return
     }
+    */
 
     if ('speechSynthesis' in window) {
       // Cancel any ongoing speech
       window.speechSynthesis.cancel()
       
       const utterance = new SpeechSynthesisUtterance(text)
-      utterance.rate = 1.0
+      utterance.rate = 0.9 // Slightly slower for better comprehension
       utterance.pitch = 1.0
       utterance.volume = 1.0
+      
+      // Set language for speech synthesis
+      utterance.lang = selectedLanguage.code;
       
       utterance.onstart = () => {
         setIsSpeaking(true)
         toast({
           title: "Speaking...",
-          description: "Tadashi AI is reading the response",
+          description: `Tadashi AI is reading the response in ${selectedLanguage.name}`,
         })
       }
       utterance.onend = () => {
@@ -218,9 +273,19 @@ export default function TtsSttChatBox() {
     }
   }
 
+  // Improved scrolling function with better reliability
+  const scrollToBottom = () => {
+    // Use requestAnimationFrame to ensure DOM is updated before scrolling
+    requestAnimationFrame(() => {
+      if (messagesEndRef.current) {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth", block: "end" })
+      }
+    })
+  }
+
   // Auto-scroll to bottom when new messages are added
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    scrollToBottom()
   }, [messages])
 
   // Focus management for accessibility
@@ -244,12 +309,35 @@ export default function TtsSttChatBox() {
     setIsLoading(true)
 
     try {
+      // Record the question to Google Sheets (during open beta)
+      try {
+        await fetch("/api/record-question", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            question: input,
+            language: selectedLanguage.code,
+            languageName: selectedLanguage.name,
+            timestamp: new Date().toISOString(),
+          }),
+        })
+      } catch (recordError) {
+        console.error("Failed to record question:", recordError)
+        // Don't fail the main request if recording fails
+      }
+
       const response = await fetch("/api/mistral", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt: input }),
+        body: JSON.stringify({ 
+          prompt: input,
+          language: selectedLanguage.code,
+          languageName: selectedLanguage.name
+        }),
       })
 
       if (!response.ok) {
@@ -319,6 +407,21 @@ export default function TtsSttChatBox() {
     }
   }
 
+  // Add a phrase to the input
+  const addPhrase = (phrase: string) => {
+    setInput(prev => prev ? `${prev}, ${phrase}` : phrase);
+    inputRef.current?.focus();
+  }
+
+  // Increase font size for better readability
+  const increaseFontSize = () => {
+    if (fontSize === "base") setFontSize("large");
+    else if (fontSize === "large") setFontSize("xl");
+    else setFontSize("base");
+  }
+
+  // Remove authentication check for open beta
+  /*
   if (!user) {
     return (
       <Card className="w-full max-w-3xl mx-auto shadow-lg dark:bg-gray-900 border-tadashi-blue dark:border-tadashi-darkBlue">
@@ -350,7 +453,10 @@ export default function TtsSttChatBox() {
       </Card>
     )
   }
+  */
 
+  // Remove premium check for open beta
+  /*
   if (!isPremium) {
     return (
       <Card className="w-full max-w-3xl mx-auto shadow-lg dark:bg-gray-900 border-tadashi-blue dark:border-tadashi-darkBlue">
@@ -375,6 +481,7 @@ export default function TtsSttChatBox() {
       </Card>
     )
   }
+  */
 
   return (
     <Card 
@@ -385,10 +492,98 @@ export default function TtsSttChatBox() {
       <CardHeader className="bg-tadashi-blue dark:bg-tadashi-darkBlue text-white rounded-t-lg">
         <CardTitle className="text-xl font-semibold flex items-center gap-2">
           <Accessibility className="h-5 w-5" />
-          TTS/STT with Mistral AI
+          TTS/STT with Mistral AI - Open Beta
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
+        {/* Accessibility Toolbar */}
+        <div className="p-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 flex flex-wrap gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={increaseFontSize}
+            className="text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+            title="Adjust font size for better readability"
+          >
+            <Type className="h-4 w-4 mr-1" />
+            Font Size
+          </Button>
+          
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowVisualAids(!showVisualAids)}
+            className="text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+            title={showVisualAids ? "Hide visual aids" : "Show visual aids"}
+          >
+            {showVisualAids ? <EyeOff className="h-4 w-4 mr-1" /> : <Eye className="h-4 w-4 mr-1" />}
+            Visual Aids
+          </Button>
+          
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowQuickPhrases(!showQuickPhrases)}
+            className="text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+            title={showQuickPhrases ? "Hide quick phrases" : "Show quick phrases"}
+          >
+            <span className="mr-1">⚡</span>
+            Quick Phrases
+          </Button>
+        </div>
+        
+        {/* Quick Phrases Panel */}
+        {showQuickPhrases && (
+          <div className="p-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">
+              Common Health Phrases:
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {commonHealthPhrases.map((phrase, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => addPhrase(phrase)}
+                  className="text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 h-auto py-1 px-2 text-xs"
+                >
+                  {phrase}
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {/* Language Selector */}
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+          <div className="flex items-center gap-2 mb-2">
+            <Languages className="h-4 w-4 text-tadashi-blue" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Select Language:
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {indianLanguages.map((language) => (
+              <Button
+                key={language.code}
+                variant={selectedLanguage.code === language.code ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSelectedLanguage(language)}
+                className={
+                  selectedLanguage.code === language.code
+                    ? "bg-tadashi-blue text-white hover:bg-tadashi-darkBlue"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                }
+              >
+                {language.name}
+              </Button>
+            ))}
+          </div>
+          <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+            Selected: {selectedLanguage.description} ({selectedLanguage.code})
+          </div>
+        </div>
+        
         <div 
           className="h-[400px] overflow-y-auto p-4 space-y-4 bg-tadashi-lightBlue dark:bg-gray-800 relative"
           role="log"
@@ -415,7 +610,7 @@ export default function TtsSttChatBox() {
                   message.role === "user"
                     ? "bg-tadashi-blue text-white dark:bg-tadashi-darkBlue"
                     : "bg-white dark:bg-gray-700 shadow-md"
-                }`}
+                } ${fontSize === "large" ? "text-lg" : fontSize === "xl" ? "text-xl" : ""}`}
               >
                 <div className="flex justify-between items-start">
                   <p className="whitespace-pre-wrap" id={`message-${index}`}>
@@ -439,12 +634,31 @@ export default function TtsSttChatBox() {
                     </Button>
                   )}
                 </div>
+                
+                {/* Visual aids for assistant messages */}
+                {showVisualAids && message.role === "assistant" && (
+                  <div className="mt-2 flex justify-center">
+                    <InteractiveGif
+                      src={
+                        message.content.toLowerCase().includes("headache") || message.content.toLowerCase().includes("pain") 
+                          ? "/images/tadashi-caring.gif" 
+                          : message.content.toLowerCase().includes("good") || message.content.toLowerCase().includes("well") 
+                          ? "/images/tadashi-thumbs-up.gif" 
+                          : "/images/tadashi-hello.gif"
+                      }
+                      alt="Tadashi AI visual aid"
+                      width={60}
+                      height={60}
+                      floating={true}
+                    />
+                  </div>
+                )}
               </div>
             </div>
           ))}
           {isLoading && (
             <div className="flex justify-start">
-              <div className="max-w-[80%] rounded-2xl p-3 bg-white dark:bg-gray-700 shadow-md">
+              <div className={`max-w-[80%] rounded-2xl p-3 bg-white dark:bg-gray-700 shadow-md ${fontSize === "large" ? "text-lg" : fontSize === "xl" ? "text-xl" : ""}`}>
                 <div className="flex items-center space-x-2">
                   <Loader2 className="h-4 w-4 animate-spin text-tadashi-blue" />
                   <p id="ai-thinking">Mistral AI is thinking...</p>
@@ -464,7 +678,7 @@ export default function TtsSttChatBox() {
           )}
           {isSpeaking && (
             <div className="flex justify-start">
-              <div className="max-w-[80%] rounded-2xl p-3 bg-white dark:bg-gray-700 shadow-md">
+              <div className={`max-w-[80%] rounded-2xl p-3 bg-white dark:bg-gray-700 shadow-md ${fontSize === "large" ? "text-lg" : fontSize === "xl" ? "text-xl" : ""}`}>
                 <div className="flex items-center space-x-2">
                   <Loader2 className="h-4 w-4 animate-spin text-tadashi-blue" />
                   <p id="ai-speaking">Speaking...</p>
@@ -527,8 +741,8 @@ export default function TtsSttChatBox() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder={isRecording ? "Listening..." : "Type or speak your message... (Ctrl+Enter to send, Alt+S to focus send button, Alt+M to focus mic button)"}
-              className="flex-grow tadashi-input dark:bg-gray-700 dark:text-white dark:border-gray-600 min-h-[60px]"
+              placeholder={isRecording ? `Listening in ${selectedLanguage.name}...` : `Type or speak in ${selectedLanguage.name}... (Ctrl+Enter to send, Alt+S to focus send button, Alt+M to focus mic button)`}
+              className={`flex-grow tadashi-input dark:bg-gray-700 dark:text-white dark:border-gray-600 min-h-[60px] ${fontSize === "large" ? "text-lg" : fontSize === "xl" ? "text-xl" : ""}`}
               disabled={isLoading || isRecording}
               aria-label="Type your message"
               aria-describedby="input-help"

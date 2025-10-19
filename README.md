@@ -1,4 +1,4 @@
-# Tadashi AI - Your Personal Healthcare Companion
+# Tadashi AI - India's First Comprehensive Health Management Companion
 
 <p align="center">
   <img src="public/images/tadashi-hello.gif" alt="Tadashi AI" width="200" />
@@ -17,7 +17,9 @@
 
 ## Overview
 
-Tadashi AI is a comprehensive healthcare companion application that combines the caring nature of Disney's Baymax with modern AI technology. Built with Next.js and TypeScript, it provides users with personalized health advice, symptom checking, and wellness tracking capabilities.
+Tadashi AI is India's first comprehensive health management companion that combines the caring nature of Disney's Baymax with modern AI technology. Built with Next.js and TypeScript, it provides users with personalized health advice, symptom checking, wellness tracking, and a complete suite of 12 health management tools.
+
+**🎉 Now in Open Beta - Special Release for Indian Users with 13 Language Support!**
 
 ## Features
 
@@ -31,7 +33,12 @@ Tadashi AI is a comprehensive healthcare companion application that combines the
 - Speech-to-Text (STT) capabilities
 - Text-to-Speech (TTS) functionality
 - Voice-activated health queries
-- Premium voice features
+- **Now available to all users during Open Beta!**
+
+### 🌍 Indian Language Support (Open Beta)
+- Support for 13 major Indian languages
+- Hindi, Bengali, Telugu, Marathi, Tamil, Urdu, Gujarati, Kannada, Malayalam, Punjabi, Odia, Assamese
+- Language selector for personalized experience
 
 ### 🎨 Personalized Experience
 - Multiple mood-based themes (Calm, Energetic, Focus, Relax)
@@ -39,10 +46,16 @@ Tadashi AI is a comprehensive healthcare companion application that combines the
 - Animated UI with interactive elements
 - Personalized health recommendations
 
+### ♿ Enhanced Accessibility (Open Beta)
+- Font size adjustment controls
+- Visual aids with contextual GIFs
+- Quick phrase buttons for common health concerns
+- Simplified interface for low-literacy users
+
 ### 🔐 User Management
 - Secure authentication system
 - User profiles with health preferences
-- Premium subscription features
+- **Temporarily disabled for Open Beta access**
 - Session management
 
 ### 🏥 Healthcare Tools
@@ -50,6 +63,20 @@ Tadashi AI is a comprehensive healthcare companion application that combines the
 - Wellness tracking
 - Emergency response protocols
 - Preventive care reminders
+
+### 💊 Health Management Suite (Open Beta)
+- **Reminders & Routine**: Medication, hydration, sleep and exercise alerts
+- **AI Wellness Insights**: Detailed health analytics with charts and AI advice
+- **SOS & Emergency**: One-touch emergency alert simulation
+- **Symptom Checker**: AI-powered diagnosis and care recommendations
+- **Mood & Mental Health Tracker**: Emotional trend analysis with ambient sound player
+- **Nutrition & Diet Assistant**: Meal logging and dietary recommendations
+- **Sleep Analysis**: Sleep cycle monitoring and quality insights
+- **Fitness & Activity**: Step counting and workout tracking
+- **Health Record Vault**: Secure storage for medical documents
+- **Community & Support**: Discussion forum for health topics
+- **AI Insights & Reports**: Comprehensive health analysis with PDF export
+- **Language & Accessibility Settings**: 13 Indian languages with enhanced accessibility features
 
 ## Technology Stack
 
@@ -105,6 +132,17 @@ Tadashi AI is a comprehensive healthcare companion application that combines the
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+### Open Beta Access
+
+During the open beta period, all features are available without authentication:
+- Visit [http://localhost:3000/tts-stt](http://localhost:3000/tts-stt) to access voice features
+- Use the language selector to choose your preferred Indian language
+- Try the accessibility features designed for low-literacy users
+- Explore the complete Health Management Suite with 12 specialized tools
+- Access AI-generated health insights and reports
+- Participate in the community health forum
+- Customize your experience with comprehensive settings
+
 ### Building for Production
 
 ```bash
@@ -133,6 +171,18 @@ curl -X POST http://localhost:3000/api/test-email -H "Content-Type: application/
 │   ├── api/               # API routes
 │   ├── chatbot/           # Chatbot page
 │   ├── tts-stt/           # Voice features page
+│   ├── reminders/          # Medication and health reminders
+│   ├── wellness-insights/  # AI wellness analytics
+│   ├── sos/                # Emergency simulation
+│   ├── symptom-checker/    # Symptom diagnosis tool
+│   ├── mood-tracker/       # Mental health monitoring
+│   ├── nutrition/          # Diet and meal tracking
+│   ├── sleep/              # Sleep analysis
+│   ├── fitness/            # Activity tracking
+│   ├── health-records/     # Medical document storage
+│   ├── community/          # Health discussion forum
+│   ├── insights/           # AI health reports
+│   ├── settings/           # Language and accessibility
 │   └── ...                # Other pages
 ├── components/            # React components
 ├── contexts/              # React context providers
